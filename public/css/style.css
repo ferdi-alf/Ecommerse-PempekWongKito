@@ -2,3 +2,23 @@
     padding: 0;
     margin: 0;
 }
+
+.dark {
+    color: white;
+    background-color: #0b0f14;
+}
+
+.darkside ul li span {
+    color: white;
+    font-weight: bold;
+}
+
+.lightnav {
+    background-color: #f3f4f698;
+    backdrop-filter: blur(10px);
+}
+
+.darknav {
+    background-color: #111827a1;
+    backdrop-filter: blur(10px);
+}
