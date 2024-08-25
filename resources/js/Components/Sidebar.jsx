@@ -8,6 +8,9 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import noAvatar from "../../../public/storage/img/no-avatar.png";
+import { Link } from "@inertiajs/react";
+import ProfileSidebar from "./ProfileSidebar";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -35,13 +38,6 @@ TabPanel.propTypes = {
     value: PropTypes.number.isRequired,
 };
 
-function a11yProps(index) {
-    return {
-        id: `vertical-tab-${index}`,
-        "aria-controls": `vertical-tabpanel-${index}`,
-    };
-}
-
 const themee = createTheme({
     components: {
         MuiTab: {
@@ -63,13 +59,24 @@ const themee = createTheme({
     },
 });
 
-const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
+const Sidebar = ({
+    isSidebarOpen,
+    toggleSidebar,
+    activeSection,
+    sections,
+    auth,
+    sectionRefs,
+}) => {
     const theme = useTheme();
     const sidebarRef = useRef(null);
-    const [value, setValue] = useState(0);
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
+    const handleTabClick = (i) => {
+        if (sectionRefs[i].current) {
+            sectionRefs[i].current.scrollIntoView({
+                behavior: "smooth",
+                block: i === 2 ? "start" : "center",
+            });
+        }
     };
 
     useEffect(() => {
@@ -97,7 +104,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
         <aside
             ref={sidebarRef}
             id="default-sidebar"
-            className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 ${
+            className={`fixed top-0 left-0 z-40 w-64 h-screen  transition-transform -translate-x-full sm:translate-x-0 ${
                 isSidebarOpen ? "translate-x-0" : "-translate-x-full"
             } `}
             aria-label="Sidebar"
@@ -107,26 +114,36 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
                     theme.palette.mode === "dark"
                         ? "bg-gray-900 darkside"
                         : "bg-gray-100 "
-                } h-full px-3 py-4 overflow-y-auto bg-gray-50 `}
+                } h-full justify-between px-3 py-4 overflow-y-auto flex flex-col bg-gray-50 `}
             >
+                <div className="w-full flex  items-center flex-nowrap gap-x-2 p-1 ">
+                    <ProfileSidebar auth={auth} noAvatar={noAvatar} />
+                </div>
                 <div class="space-y-2 font-medium">
                     <ThemeProvider theme={themee}>
                         <Tabs
                             orientation="vertical"
                             variant="scrollable"
-                            value={value}
+                            value={sections.indexOf(activeSection)}
                             textColor="inherit "
                             indicatorColor="secondary"
-                            onChange={handleChange}
                             aria-label="Vertical Tabs"
                         >
-                            <Tab label="About" {...a11yProps(0)} />
-                            <Tab label="Product" {...a11yProps(1)} />
-                            <Tab label="Tips & Tricks" {...a11yProps(2)} />
-                            <Tab label="Rating" {...a11yProps(3)} />
+                            {sections.map((section, index) => (
+                                <Tab
+                                    onClick={() => handleTabClick(index)}
+                                    key={index}
+                                    label={section}
+                                ></Tab>
+                            ))}
                         </Tabs>
                     </ThemeProvider>
                 </div>
+                <footer>
+                    <p className="font-semibold moderustic">
+                        Design by Muhammad Ferdi Alfian
+                    </p>
+                </footer>
             </div>
         </aside>
     );

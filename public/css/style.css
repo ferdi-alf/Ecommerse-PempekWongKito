@@ -1,6 +1,15 @@
+@import url("https://fonts.googleapis.com");
+@import url("https://fonts.gstatic.com");
+@import url("https://fonts.googleapis.com/css2?family=Moderustic:wght@300..800&display=swap");
+
 * {
     padding: 0;
     margin: 0;
+}
+
+.moderustic {
+    font-family: "Moderustic", sans-serif;
+    font-optical-sizing: auto;
 }
 
 .dark {
@@ -21,4 +30,10 @@
 .darknav {
     background-color: #111827a1;
     backdrop-filter: blur(10px);
+}
+
+@media screen and (max-width: 400px) {
+    .bb {
+        width: 70%;
+    }
 }

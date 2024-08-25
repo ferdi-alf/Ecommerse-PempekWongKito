@@ -6,14 +6,59 @@ import Navbar from "@/Components/Navbar";
 import Sidebar from "@/Components/Sidebar";
 import { Head } from "@inertiajs/react";
 import "../../../public/css/style.css";
+import Corousel from "@/Components/Corousel";
+import About from "@/Components/About";
+import Service from "@/Components/Service";
+import Product from "@/Components/Product";
+import Tips from "@/Components/Tips";
 
-export default function Welcome({}) {
+export default function Welcome(props) {
+    console.log(props);
     const theme = useTheme();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [activeSection, setActiveSection] = useState("");
+
+    const sections = [
+        "About",
+        "Service",
+        "Product",
+        "Tips & Tricks",
+        "Comments",
+    ];
+    const sectionRefs = sections.map(() => useRef(null));
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
+
+    useEffect(() => {
+        const options = {
+            root: null,
+            rootMargin: "-50% 0px -75% 0px",
+            threshold: 0,
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    setActiveSection(entry.target.id);
+                }
+            });
+        }, options);
+
+        sectionRefs.forEach((ref, i) => {
+            if (ref.current) {
+                ref.current.id = sections[i];
+                observer.observe(ref.current);
+            }
+        });
+
+        return () => {
+            sectionRefs.forEach((ref) => {
+                if (ref.current) observer.unobserve(ref.current);
+            });
+        };
+    }, [sectionRefs]);
 
     return (
         <>
@@ -24,265 +69,51 @@ export default function Welcome({}) {
                 } flex`}
             >
                 <Sidebar
+                    auth={props.auth.user}
                     isSidebarOpen={isSidebarOpen}
                     toggleSidebar={toggleSidebar}
+                    sections={sections}
+                    sectionRefs={sectionRefs}
+                    activeSection={activeSection}
                 />
-                <div class="p-4 sm:ml-64 w-full relativeS">
-                    <Navbar toggleSidebar={toggleSidebar} />
+                <div className="p-4 sm:ml-64 w-full relative">
+                    <Navbar
+                        auth={props.auth.user}
+                        toggleSidebar={toggleSidebar}
+                    />
 
-                    <div class="p-4 border-2 mt-20 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-                        <div class="grid grid-cols-3 gap-4 mb-4">
-                            <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-                                <p class="text-2xl text-gray-400 dark:text-gray-500">
-                                    <svg
-                                        class="w-3.5 h-3.5"
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 18 18"
-                                    >
-                                        <path
-                                            stroke="currentColor"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9 1v16M1 9h16"
-                                        />
-                                    </svg>
-                                </p>
-                            </div>
-                            <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-                                <p class="text-2xl text-gray-400 dark:text-gray-500">
-                                    <svg
-                                        class="w-3.5 h-3.5"
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 18 18"
-                                    >
-                                        <path
-                                            stroke="currentColor"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9 1v16M1 9h16"
-                                        />
-                                    </svg>
-                                </p>
-                            </div>
-                            <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-                                <p class="text-2xl text-gray-400 dark:text-gray-500">
-                                    <svg
-                                        class="w-3.5 h-3.5"
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 18 18"
-                                    >
-                                        <path
-                                            stroke="currentColor"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9 1v16M1 9h16"
-                                        />
-                                    </svg>
-                                </p>
-                            </div>
+                    <div className="sm:p-4 p-0 mt-20   rounded-lg ">
+                        <header>
+                            <Corousel />
+                        </header>
+
+                        <div
+                            ref={sectionRefs[0]}
+                            className="flex items-center justify-center mb-4 rounded mt-9  "
+                        >
+                            <About />
                         </div>
-                        <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-                            <p class="text-2xl text-gray-400 dark:text-gray-500">
-                                <svg
-                                    class="w-3.5 h-3.5"
-                                    aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 18 18"
-                                >
-                                    <path
-                                        stroke="currentColor"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M9 1v16M1 9h16"
-                                    />
-                                </svg>
-                            </p>
+                        <div
+                            ref={sectionRefs[1]}
+                            className="flex items-center justify-center mt-20 mb-20 p-3  rounded "
+                        >
+                            <Service />
                         </div>
-                        <div class="grid grid-cols-2 gap-4 mb-4">
-                            <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                                <p class="text-2xl text-gray-400 dark:text-gray-500">
-                                    <svg
-                                        class="w-3.5 h-3.5"
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 18 18"
-                                    >
-                                        <path
-                                            stroke="currentColor"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9 1v16M1 9h16"
-                                        />
-                                    </svg>
-                                </p>
-                            </div>
-                            <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                                <p class="text-2xl text-gray-400 dark:text-gray-500">
-                                    <svg
-                                        class="w-3.5 h-3.5"
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 18 18"
-                                    >
-                                        <path
-                                            stroke="currentColor"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9 1v16M1 9h16"
-                                        />
-                                    </svg>
-                                </p>
-                            </div>
-                            <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                                <p class="text-2xl text-gray-400 dark:text-gray-500">
-                                    <svg
-                                        class="w-3.5 h-3.5"
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 18 18"
-                                    >
-                                        <path
-                                            stroke="currentColor"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9 1v16M1 9h16"
-                                        />
-                                    </svg>
-                                </p>
-                            </div>
-                            <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                                <p class="text-2xl text-gray-400 dark:text-gray-500">
-                                    <svg
-                                        class="w-3.5 h-3.5"
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 18 18"
-                                    >
-                                        <path
-                                            stroke="currentColor"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9 1v16M1 9h16"
-                                        />
-                                    </svg>
-                                </p>
-                            </div>
+                        <div
+                            ref={sectionRefs[2]}
+                            class="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 grid-cols-2 sm:w-auto gap-4 mb-4"
+                        >
+                            <Product />
+                            <Product />
+                            <Product />
+                            <Product />
                         </div>
-                        <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-                            <p class="text-2xl text-gray-400 dark:text-gray-500">
-                                <svg
-                                    class="w-3.5 h-3.5"
-                                    aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 18 18"
-                                >
-                                    <path
-                                        stroke="currentColor"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M9 1v16M1 9h16"
-                                    />
-                                </svg>
-                            </p>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                                <p class="text-2xl text-gray-400 dark:text-gray-500">
-                                    <svg
-                                        class="w-3.5 h-3.5"
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 18 18"
-                                    >
-                                        <path
-                                            stroke="currentColor"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9 1v16M1 9h16"
-                                        />
-                                    </svg>
-                                </p>
-                            </div>
-                            <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                                <p class="text-2xl text-gray-400 dark:text-gray-500">
-                                    <svg
-                                        class="w-3.5 h-3.5"
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 18 18"
-                                    >
-                                        <path
-                                            stroke="currentColor"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9 1v16M1 9h16"
-                                        />
-                                    </svg>
-                                </p>
-                            </div>
-                            <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                                <p class="text-2xl text-gray-400 dark:text-gray-500">
-                                    <svg
-                                        class="w-3.5 h-3.5"
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 18 18"
-                                    >
-                                        <path
-                                            stroke="currentColor"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9 1v16M1 9h16"
-                                        />
-                                    </svg>
-                                </p>
-                            </div>
-                            <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                                <p class="text-2xl text-gray-400 dark:text-gray-500">
-                                    <svg
-                                        class="w-3.5 h-3.5"
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 18 18"
-                                    >
-                                        <path
-                                            stroke="currentColor"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9 1v16M1 9h16"
-                                        />
-                                    </svg>
-                                </p>
-                            </div>
+
+                        <div
+                            ref={sectionRefs[3]}
+                            className="w-full flex justify-start items-center"
+                        >
+                            <Tips />
                         </div>
                     </div>
                 </div>

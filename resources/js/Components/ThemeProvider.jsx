@@ -5,18 +5,48 @@ import {
     createTheme,
 } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import { useEffect } from "react";
 
 export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
 const ThemeProvider = ({ children }) => {
-    const [mode, setMode] = useState("light");
+    const getDefaultMode = () => {
+        const savedMode = localStorage.getItem("themeMode");
+        if (savedMode) {
+            return savedMode;
+        } else {
+            const prefersDarkMode = window.matchMedia(
+                "(prefers-color-scheme: dark)"
+            ).matches;
+            return prefersDarkMode ? "dark" : "light";
+        }
+    };
+
+    const [mode, setMode] = useState(getDefaultMode);
+
+    useEffect(() => {
+        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+        const handleChange = (e) => {
+            setMode(e.matches ? "dark" : "light");
+            localStorage.setItem("themeMode", e.matches ? "dark" : "ligth");
+        };
+
+        mediaQuery.addEventListener("change", handleChange);
+
+        return () => {
+            mediaQuery.removeEventListener("change", handleChange);
+        };
+    }, []);
 
     const colorMode = useMemo(
         () => ({
             toggleColorMode: () => {
-                setMode((prevMode) =>
-                    prevMode === "light" ? "dark" : "light"
-                );
+                setMode((prevMode) => {
+                    const newMode = prevMode === "light" ? "dark" : "light";
+                    localStorage.setItem("themeMode", newMode);
+                    return newMode;
+                });
             },
         }),
         []
