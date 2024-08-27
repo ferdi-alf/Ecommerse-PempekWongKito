@@ -10,7 +10,7 @@ import Corousel from "@/Components/Corousel";
 import About from "@/Components/About";
 import Service from "@/Components/Service";
 import Product from "@/Components/Product";
-import Tips from "@/Components/Tips";
+import RegisterSection from "@/Components/RegisterSection";
 
 export default function Welcome(props) {
     console.log(props);
@@ -18,13 +18,7 @@ export default function Welcome(props) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [activeSection, setActiveSection] = useState("");
 
-    const sections = [
-        "About",
-        "Service",
-        "Product",
-        "Tips & Tricks",
-        "Comments",
-    ];
+    const sections = ["About", "Service", "souvenir shop", "Register"];
     const sectionRefs = sections.map(() => useRef(null));
 
     const toggleSidebar = () => {
@@ -101,19 +95,18 @@ export default function Welcome(props) {
                         </div>
                         <div
                             ref={sectionRefs[2]}
-                            class="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 grid-cols-2 sm:w-auto gap-4 mb-4"
+                            className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 grid-cols-2 sm:w-auto gap-4 mb-4"
                         >
                             <Product />
                             <Product />
                             <Product />
                             <Product />
                         </div>
-
                         <div
                             ref={sectionRefs[3]}
-                            className="w-full flex justify-start items-center"
+                            className="w-full flex justify-center items-center"
                         >
-                            <Tips />
+                            <RegisterSection />
                         </div>
                     </div>
                 </div>

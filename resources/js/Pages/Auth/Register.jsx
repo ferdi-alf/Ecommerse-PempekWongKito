@@ -1,112 +1,75 @@
-import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head } from "@inertiajs/react";
+import { TextField, useTheme } from "@mui/material";
 
 export default function Register() {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-    });
-
-    const submit = (e) => {
-        e.preventDefault();
-
-        post(route('register'), {
-            onFinish: () => reset('password', 'password_confirmation'),
-        });
-    };
+    const theme = useTheme();
 
     return (
-        <GuestLayout>
-            <Head title="Register" />
-
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="name" value="Name" />
-
-                    <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        onChange={(e) => setData('name', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.name} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        onChange={(e) => setData('email', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
-
-                    <TextInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData('password_confirmation', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.password_confirmation} className="mt-2" />
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    <Link
-                        href={route('login')}
-                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        <>
+            <Head title="register" />
+            <div
+                className={`${
+                    theme.palette.mode === "dark"
+                        ? "bg-slate-950 text-white"
+                        : "bg-slate-50"
+                } flex justify-center  h-screen `}
+            >
+                <div className="w-4/5  flex flex-col justify-center items-center">
+                    <div
+                        className={`${
+                            theme.palette.mode === "dark"
+                                ? "bg-gray-800"
+                                : "bg-white"
+                        }  w-1/2 rounded-md shadow-md p-3`}
                     >
-                        Already registered?
-                    </Link>
+                        <p className="text-2xl moderustic font-bold bg-clip-text text-transparent bg-gradient-to-br from-red-700 to-orange-400">
+                            Register
+                        </p>
+                        <div className="grid grid-cols-2 gap-x-3">
+                            <TextField
+                                id="standard-basic"
+                                color="warning"
+                                label="Username"
+                                variant="standard"
+                            />
+                            <TextField
+                                id="standard-basic"
+                                label="Full Name"
+                                color="warning"
+                                variant="standard"
+                            />
+                        </div>
+                        <div className="grid grid-cols-2 gap-x-3">
+                            <TextField
+                                id="standard-basic"
+                                label="Email"
+                                color="warning"
+                                variant="standard"
+                            />
+                            <TextField
+                                color="warning"
+                                id="standard-basic"
+                                label="Number Phone"
+                                variant="standard"
+                                type="number"
+                            />
+                        </div>
 
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
-                    </PrimaryButton>
+                        <label
+                            for="message"
+                            className="block mt-5 text-sm font-medium  dark:text-white"
+                        >
+                            Alamat
+                        </label>
+                        <textarea
+                            id="message"
+                            rows="5"
+                            className="block p-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Write your thoughts here..."
+                        ></textarea>
+                    </div>
                 </div>
-            </form>
-        </GuestLayout>
+            </div>
+        </>
     );
 }

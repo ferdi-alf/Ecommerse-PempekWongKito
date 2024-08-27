@@ -55,42 +55,16 @@ const Navbar = ({ toggleSidebar, auth }) => {
                 </button>
                 <div className="logo text-2xl w-1/12">Logo</div>
 
-                <div className="flex   justify-between items-center">
-                    <div className="text-orange-400 pr-3 flex flex-nowrap items-center justify-between w-full sm:w-auto sm:justify-center text-xl gap-x-5 p-1 sm:gap-x-6 cursor-pointer">
-                        <FontAwesomeIcon icon={faCartShopping} />
-                        <div className="relative">
-                            <FontAwesomeIcon
-                                icon={faUser}
-                                onClick={handleAccount}
-                            />
-                            {account && !auth ? (
-                                <div
-                                    ref={accountRef}
-                                    className={` absolute p-2 rounded-tr-xl right-0 top-10 ${
-                                        theme.palette.mode === "dark"
-                                            ? "bg-slate-900"
-                                            : "bg-white"
-                                    }`}
-                                >
-                                    <p
-                                        className={`text-sm font-medium w-36 ${
-                                            theme.palette.mode === "dark"
-                                                ? "text-white"
-                                                : "text-black"
-                                        }`}
-                                    >
-                                        kamu belum memiliki akun klik{" "}
-                                        <Link className="text-blue-500 hover:underline">
-                                            Disini
-                                        </Link>{" "}
-                                        untuk login
-                                    </p>
-                                </div>
-                            ) : (
-                                ""
-                            )}
+                <div className="flex gap-x-4 sm:pr-0 pr-2 justify-between items-center">
+                    {!auth ? (
+                        <button className="bg-transparent bg-gradient-to-br from-red-700 to-orange-400 rounded-md text-white moderustic btn font-semibold">
+                            Login
+                        </button>
+                    ) : (
+                        <div className="bg-clip-text bg-gradient-to-br text-transparent from-red-700 to-orange-400 pr-3 flex flex-nowrap items-center justify-between w-full sm:w-auto sm:justify-center text-xl gap-x-5 p-1 sm:gap-x-6 cursor-pointer">
+                            <i class="fa-solid fa-user"></i>
                         </div>
-                    </div>
+                    )}
                     <DarkmodeToggle />
                 </div>
             </div>

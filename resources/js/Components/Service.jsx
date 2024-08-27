@@ -1,38 +1,22 @@
-import {
-    faBowlFood,
-    faCoins,
-    faTruck,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 const Service = () => {
     return (
-        <div className="w-full flex flex-wrap md:justify-around justify-center gap-y-10  items-center">
-            <div className="flex flex-col lg:w-[12%] md:w-1/6 text-center ">
-                <FontAwesomeIcon
-                    icon={faTruck}
-                    className="text-5xl text-orange-400"
-                />
+        <div className="w-full grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5">
+            <div className="flex flex-col  text-center ">
+                <i class="fa-solid fa-bag-shopping text-5xl  text-transparent bg-clip-text bg-gradient-to-br from-red-700 to-orange-400"></i>
                 <p className="moderustic font-light ">
-                    Pengeriman cepat dan aman
+                    Menyediakan segala macam tokoh oleh-oleh dari palembang
                 </p>
             </div>
-            <div className="flex flex-col lg:w-[12%] md:w-1/6 text-center ">
-                <FontAwesomeIcon
-                    icon={faCoins}
-                    className="text-5xl text-orange-400"
-                />
+            <div className="flex flex-col  text-center ">
+                <i class="fa-solid fa-coins text-5xl  text-transparent bg-clip-text bg-gradient-to-br from-red-700 to-orange-400"></i>
                 <p className="moderustic font-light ">
-                    Harga murah dan terjangkau
+                    Gratis pendaftaran tanpa biaya untuk toko
                 </p>
             </div>
-            <div className="flex flex-col lg:w-[12%] md:w-1/6 text-center ">
-                <FontAwesomeIcon
-                    icon={faBowlFood}
-                    className="text-5xl text-orange-400"
-                />
+            <div className="flex flex-col  text-center ">
+                <i class="text-5xl fa-solid fa-location-dot text-transparent bg-clip-text bg-gradient-to-br from-red-700 to-orange-400"></i>
                 <p className="moderustic font-light ">
-                    Rasa asli pempek Pelembang
+                    Navigasi dan petunjuk arah langsung
                 </p>
             </div>
         </div>

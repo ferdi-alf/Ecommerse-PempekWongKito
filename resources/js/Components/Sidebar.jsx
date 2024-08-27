@@ -6,10 +6,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import noAvatar from "../../../public/storage/img/no-avatar.png";
-import { Link } from "@inertiajs/react";
 import ProfileSidebar from "./ProfileSidebar";
 
 function TabPanel(props) {
@@ -124,17 +122,39 @@ const Sidebar = ({
                         <Tabs
                             orientation="vertical"
                             variant="scrollable"
+                            className="flex justify-center  text-center"
                             value={sections.indexOf(activeSection)}
-                            textColor="inherit "
                             indicatorColor="secondary"
                             aria-label="Vertical Tabs"
+                            sx={{
+                                ".MuiTabs-flexContainerVertical": {
+                                    alignItems: "flex-start",
+                                },
+                                ".MuiTabs-indicator": {
+                                    right: 0,
+                                    left: "auto",
+                                    width: "4px",
+                                },
+                            }}
                         >
                             {sections.map((section, index) => (
                                 <Tab
-                                    onClick={() => handleTabClick(index)}
-                                    key={index}
                                     label={section}
-                                ></Tab>
+                                    onClick={() => handleTabClick(index)}
+                                    sx={
+                                        theme.palette.mode === "dark"
+                                            ? {
+                                                  color: "white",
+                                                  justifyContent: "flex-start",
+                                                  textAlign: "left",
+                                              }
+                                            : {
+                                                  color: "black",
+                                                  justifyContent: "flex-start",
+                                                  textAlign: "left",
+                                              }
+                                    }
+                                />
                             ))}
                         </Tabs>
                     </ThemeProvider>

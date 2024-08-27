@@ -26,38 +26,14 @@ const About = () => {
                 </div>
 
                 <p className="moderustic md:w-3/4 w-full font-light">
-                    Pempek wong kito adalah toko pempek yang berada di palembang
-                    yang sudah berdiri dari 1992, beralamat di Jl. Sersan Sani
-                    No.1019, Pipa Jaya, Kec. Kemuning, Kota Palembang, Sumatera
-                    Selatan. Disini kami menyediakan pempek secara online untuk
-                    mencicipi cita rasa asli pempek khas palembang.
+                    <strong>Selamat Datang di Oleh-oleh Wong Kito</strong>{" "}
+                    Temukan berbagai pilihan oleh-oleh khas Palembang dengan
+                    mudah dan cepat melalui website "Oleh-oleh Wong Kito". Kami
+                    hadir untuk memudahkan para wisatawan dan pengunjung dalam
+                    mencari dan menemukan toko oleh-oleh terbaik di Palembang.
+                    Dengan fitur-fitur unggulan kami, Anda bisa mencari toko
+                    terdeka dan mendapatkan petunjuk arah
                 </p>
-            </div>
-            <div className="flex mt-5 md:w-auto w-full md:justify-start justify-between sm:justify-around  flex-nowrap sm:gap-x-10 gap-x-3">
-                <div className="text-orange-400 p-2 rounded-lg border-2 border-orange-400">
-                    <FontAwesomeIcon
-                        icon={faInstagram}
-                        className="sm:text-3xl text-3xl"
-                    />
-                </div>
-                <div className="text-orange-400 p-2 rounded-lg border-2 border-orange-400">
-                    <FontAwesomeIcon
-                        icon={faFacebook}
-                        className="sm:text-3xl text-3xl"
-                    />
-                </div>
-                <div className="text-orange-400 p-2 rounded-lg border-2 border-orange-400">
-                    <FontAwesomeIcon
-                        icon={faTiktok}
-                        className="sm:text-3xl text-3xl"
-                    />
-                </div>
-                <div className="text-orange-400 p-2 rounded-lg border-2 border-orange-400">
-                    <FontAwesomeIcon
-                        icon={faLocationDot}
-                        className="sm:text-3xl text-3xl"
-                    />
-                </div>
             </div>
         </div>
     );
