@@ -1,4 +1,4 @@
-import { Head } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import { useTheme } from "@mui/material";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
@@ -16,6 +16,7 @@ import StepConnector, {
 import RegisterOne from "./RegiterOne";
 import RegisterTwo from "./RegisterTwo";
 import "../../../../public/css/style.css";
+import RegisterThree from "./RegisterThree";
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
     [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -106,12 +107,35 @@ export default function Index() {
     const [activeStep, setActiveStep] = React.useState(0);
     const [animate, setAnimate] = React.useState(false);
 
+    const { data, setData, post, processing, errors } = useForm({
+        username: "",
+        namaToko: "",
+        email: "",
+        contact: "",
+        gmaps: "",
+        logo: "",
+        deskripsi: "",
+        linkInstagram: "",
+        linkTiktok: "",
+        password: "",
+        confirmPassword: "",
+        remember: true,
+    });
+
+    const handleSubmit = (e) => {
+        post("/register-store");
+    };
+
     const handleNext = () => {
-        setAnimate(true);
-        setTimeout(() => {
-            setActiveStep((prevStep) => prevStep + 1);
-            setAnimate(false);
-        }, 300);
+        if (activeStep === steps.length - 1) {
+            handleSubmit();
+        } else {
+            setAnimate(true);
+            setTimeout(() => {
+                setActiveStep((prevStep) => prevStep + 1);
+                setAnimate(false);
+            }, 300);
+        }
     };
 
     const handleBack = () => {
@@ -167,14 +191,22 @@ export default function Index() {
                             activeStep === 0 ? "h-[71%]" : ""
                         } rounded-lg shadow-md p-3`}
                     >
-                        <div
+                        <form
+                            onSubmit={handleSubmit}
                             className={`step-content ${
                                 animate ? "slide-out" : "slide-in"
                             }`}
                         >
-                            {activeStep === 0 && <RegisterOne />}
-                            {activeStep === 1 && <RegisterTwo />}
-                        </div>
+                            {activeStep === 0 && (
+                                <RegisterOne data={data} setData={setData} />
+                            )}
+                            {activeStep === 1 && (
+                                <RegisterTwo data={data} setData={setData} />
+                            )}
+                            {activeStep === 2 && (
+                                <RegisterThree data={data} setData={setData} />
+                            )}
+                        </form>
 
                         <div className="w-full flex justify-between">
                             <button
@@ -186,6 +218,11 @@ export default function Index() {
                             </button>
                             <button
                                 onClick={handleNext}
+                                type={
+                                    activeStep === steps.length - 1
+                                        ? "submit"
+                                        : "button"
+                                }
                                 className="p-2 rounded-lg w-20 font-semibold mt-10 bg-transparent bg-gradient-to-br from-red-700 to-orange-400 text-white"
                             >
                                 {activeStep === steps.length - 1

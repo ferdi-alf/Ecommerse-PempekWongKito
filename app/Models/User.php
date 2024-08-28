@@ -17,7 +17,14 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'logo',
+        'username',
+        'nama_toko',
+        'contact_toko',
+        'link_gmaps',
+        'deskripsi_toko',
+        'link_instagram',
+        'link_tiktok',
         'email',
         'password',
     ];

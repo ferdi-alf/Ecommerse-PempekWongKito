@@ -2,15 +2,16 @@ import { useState } from "react";
 import noAvatar from "../../../../public/storage/img/no-avatar.png";
 import { TextField } from "@mui/material";
 
-const RegisterTwo = () => {
+const RegisterTwo = ({ data, setData }) => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [preview, setPreview] = useState(noAvatar);
 
     const handleFileChange = (e) => {
-        const file = e.target.files[0]; // Corrected typo
+        const file = e.target.files[0];
         if (file) {
             setSelectedImage(file);
-            setPreview(URL.createObjectURL(file)); // Create a preview URL
+            setPreview(URL.createObjectURL(file));
+            setData("logo", file);
         }
     };
 
@@ -50,12 +51,16 @@ const RegisterTwo = () => {
                 Deskripsi Toko
             </label>
             <textarea
+                value={data.deskripsi}
+                onChange={(e) => setData("deskripsi", e.target.value)}
                 id="Description"
                 rows="4"
-                class="block p-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="block p-2.5 w-full text-sm  bg-transparent rounded-lg border border-gray-300 focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Masukan Deskripsi tokomu"
             ></textarea>
             <TextField
+                value={data.linkInstagram}
+                onChange={(e) => setData("linkInstagram", e.target.value)}
                 id="standard-basic"
                 color="warning"
                 className="w-full mt-2"
@@ -63,6 +68,8 @@ const RegisterTwo = () => {
                 variant="standard"
             />
             <TextField
+                value={data.linkTiktok}
+                onChange={(e) => setData("linkTiktok", e.target.value)}
                 id="standard-basic"
                 color="warning"
                 className="w-full mt-2"
